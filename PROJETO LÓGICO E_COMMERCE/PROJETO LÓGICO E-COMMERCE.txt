@@ -1,0 +1,79 @@
+-- Criar o banco de dados
+CREATE DATABASE IF NOT EXISTS ecommerce;
+USE ecommerce;
+
+-- Criar a tabela Usuarios
+CREATE TABLE IF NOT EXISTS Usuarios (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Senha VARCHAR(100) NOT NULL,
+    Data_Nascimento DATE,
+    Data_Criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Telefone VARCHAR(20)
+);
+
+-- Criar a tabela Categorias
+CREATE TABLE IF NOT EXISTS Categorias (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Descricao TEXT
+);
+
+-- Criar a tabela Produtos
+CREATE TABLE IF NOT EXISTS Produtos (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100) NOT NULL,
+    Descricao TEXT,
+    Preco DECIMAL(10, 2) NOT NULL,
+    Estoque INT NOT NULL,
+    Data_Adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Categoria_ID INT,
+    FOREIGN KEY (Categoria_ID) REFERENCES Categorias(ID)
+);
+
+-- Criar a tabela Pedidos
+CREATE TABLE IF NOT EXISTS Pedidos (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Usuario_ID INT,
+    Data_Pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Status VARCHAR(50) NOT NULL,
+    Valor_Total DECIMAL(10, 2) NOT NULL,
+    Data_Atualizacao_Status TIMESTAMP NULL,
+    FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
+);
+
+-- Criar a tabela Itens_do_Pedido
+CREATE TABLE IF NOT EXISTS Itens_do_Pedido (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Pedido_ID INT,
+    Produto_ID INT,
+    Quantidade INT NOT NULL,
+    Preco_Unitario DECIMAL(10, 2) NOT NULL,
+    Subtotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (Pedido_ID) REFERENCES Pedidos(ID),
+    FOREIGN KEY (Produto_ID) REFERENCES Produtos(ID)
+);
+
+-- Criar a tabela Pagamentos
+CREATE TABLE IF NOT EXISTS Pagamentos (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Pedido_ID INT,
+    Data_Pagamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Metodo_Pagamento VARCHAR(50) NOT NULL,
+    Valor_Pago DECIMAL(10, 2) NOT NULL,
+    Status_Pagamento VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Pedido_ID) REFERENCES Pedidos(ID)
+);
+
+-- Criar a tabela Enderecos_de_Entrega
+CREATE TABLE IF NOT EXISTS Enderecos_de_Entrega (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Usuario_ID INT,
+    Rua VARCHAR(100) NOT NULL,
+    Cidade VARCHAR(50) NOT NULL,
+    Estado VARCHAR(50) NOT NULL,
+    CEP VARCHAR(10) NOT NULL,
+    Pais VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
+);

@@ -1,0 +1,38 @@
+-- Recuperações Simples com SELECT Statement
+SELECT * FROM Usuarios;
+
+-- Filtros com WHERE Statement
+SELECT * FROM Produtos
+WHERE Preco > 100.00;
+
+-- Crie Expressões para Gerar Atributos Derivados
+SELECT Nome, YEAR(Data_Nascimento) AS Ano_Nascimento
+FROM Usuarios;
+
+-- Defina Ordenações dos Dados com ORDER BY
+SELECT * FROM Produtos
+ORDER BY Preco DESC;
+
+-- Condições de Filtros aos Grupos – HAVING Statement
+SELECT Categoria_ID, COUNT(*) AS Numero_De_Produtos
+FROM Produtos
+GROUP BY Categoria_ID
+HAVING COUNT(*) > 1;
+
+-- Crie Junções entre Tabelas para Fornecer uma Perspectiva mais Complexa dos Dados
+-- Recuperar informações dos pedidos juntamente com os nomes dos usuários
+SELECT Pedidos.ID AS Pedido_ID, Usuarios.Nome AS Nome_Usuario, Pedidos.Data_Pedido, Pedidos.Status, Pedidos.Valor_Total
+FROM Pedidos
+JOIN Usuarios ON Pedidos.Usuario_ID = Usuarios.ID;
+
+-- Recuperar informações dos itens do pedido juntamente com os nomes dos produtos
+SELECT Itens_do_Pedido.ID AS Item_ID, Pedidos.ID AS Pedido_ID, Produtos.Nome AS Nome_Produto, Itens_do_Pedido.Quantidade, Itens_do_Pedido.Preco_Unitario, Itens_do_Pedido.Subtotal
+FROM Itens_do_Pedido
+JOIN Pedidos ON Itens_do_Pedido.Pedido_ID = Pedidos.ID
+JOIN Produtos ON Itens_do_Pedido.Produto_ID = Produtos.ID;
+
+-- Recuperar informações dos pagamentos juntamente com o nome do usuário que fez o pedido
+SELECT Pagamentos.ID AS Pagamento_ID, Pagamentos.Pedido_ID, Usuarios.Nome AS Nome_Usuario, Pagamentos.Data_Pagamento, Pagamentos.Metodo_Pagamento, Pagamentos.Valor_Pago, Pagamentos.Status_Pagamento
+FROM Pagamentos
+JOIN Pedidos ON Pagamentos.Pedido_ID = Pedidos.ID
+JOIN Usuarios ON Pedidos.Usuario_ID = Usuarios.ID;

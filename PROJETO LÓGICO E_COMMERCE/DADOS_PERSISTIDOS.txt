@@ -1,0 +1,46 @@
+INSERT INTO Usuarios (Nome, Email, Senha, Data_Nascimento, Telefone)
+VALUES
+('João Silva', 'joao.silva@example.com', 'senha123', '1990-01-01', '123456789'),
+('Maria Oliveira', 'maria.oliveira@example.com', 'senha456', '1985-05-15', '987654321'),
+('Carlos Santos', 'carlos.santos@example.com', 'senha789', '1975-10-30', '564738291');
+
+INSERT INTO Categorias (Nome, Descricao)
+VALUES
+('Eletrônicos', 'Dispositivos e gadgets eletrônicos'),
+('Roupas', 'Vestuário para todas as idades'),
+('Livros', 'Livros de todos os gêneros');
+
+INSERT INTO Produtos (Nome, Descricao, Preco, Estoque, Categoria_ID)
+VALUES
+('Smartphone XYZ', 'Smartphone com 128GB de armazenamento', 2999.99, 50, 1),
+('Camiseta Básica', 'Camiseta de algodão básica', 49.90, 200, 2),
+('Livro de Romance', 'Um livro de romance emocionante', 29.90, 100, 3);
+
+INSERT INTO Pedidos (Usuario_ID, Status, Valor_Total)
+VALUES
+(1, 'Pendente', 2999.99),
+(2, 'Processando', 99.80),
+(3, 'Enviado', 29.90);
+
+
+INSERT INTO Itens_do_Pedido (Pedido_ID, Produto_ID, Quantidade, Preco_Unitario, Subtotal)
+VALUES
+(1, 1, 1, 2999.99, 2999.99),
+(2, 2, 2, 49.90, 99.80),
+(3, 3, 1, 29.90, 29.90);
+
+
+INSERT INTO Pagamentos (Pedido_ID, Metodo_Pagamento, Valor_Pago, Status_Pagamento)
+VALUES
+(1, 'Cartão de Crédito', 2999.99, 'Pago'),
+(2, 'Boleto', 99.80, 'Pendente'),
+(3, 'PayPal', 29.90, 'Pago');
+
+
+INSERT INTO Enderecos_de_Entrega (Usuario_ID, Rua, Cidade, Estado, CEP, Pais)
+VALUES
+(1, 'Rua das Flores, 123', 'São Paulo', 'SP', '01001-000', 'Brasil'),
+(2, 'Avenida Central, 456', 'Rio de Janeiro', 'RJ', '20020-000', 'Brasil'),
+(3, 'Rua dos Limoeiros, 789', 'Curitiba', 'PR', '80030-000', 'Brasil');
+
+
